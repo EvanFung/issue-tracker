@@ -1,5 +1,5 @@
 'use client';
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from 'next/dynamic'
 import "easymde/dist/easymde.min.css";
 import React, {useState} from 'react';
 import {Button, TextField, Callout, Text} from "@radix-ui/themes";
@@ -11,10 +11,16 @@ import {createIssueSchema} from "@/app/validationSchemas";
 import {z} from 'zod'
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import delay from "delay";
+
+//tell next.js not to render this component on server
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+    ssr:false
+})
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
-const NewIssuePage = () => {
+const NewIssuePage = async () => {
     const router = useRouter();
     const {register, control, handleSubmit, formState: {errors}} = useForm<IssueForm>({
         resolver: zodResolver(createIssueSchema)
@@ -32,6 +38,8 @@ const NewIssuePage = () => {
             setError('An unexpected error occurred');
         }
     });
+
+    await delay(2000);
 
     return (
         <div className='max-w-xl'>

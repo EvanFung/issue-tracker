@@ -18,7 +18,7 @@ const IssueDetailPage = async ({params}: Props) => {
     if(!issue) {
         notFound();
     }
-    await delay(1000);
+    await delay(2000);
     return (
         <div>
             <Heading>{issue.title}</Heading>
@@ -29,7 +29,6 @@ const IssueDetailPage = async ({params}: Props) => {
             <Card className='prose' mt='4'>
                 <ReactMarkdown>{issue.description}</ReactMarkdown>
             </Card>
-
         </div>
     );
 };
