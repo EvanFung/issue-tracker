@@ -1,5 +1,4 @@
 'use client';
-import dynamic from 'next/dynamic'
 import "easymde/dist/easymde.min.css";
 import React, {useState} from 'react';
 import {Button, Callout, TextField} from "@radix-ui/themes";
@@ -11,13 +10,8 @@ import {issueSchema} from "@/app/validationSchemas";
 import {z} from 'zod'
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import delay from "delay";
 import {Issue} from "@prisma/client";
-
-//tell next.js not to render this component on server
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-    ssr: false
-})
+import SimpleMDE from 'react-simplemde-editor';
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -48,7 +42,7 @@ const IssueForm = async ({issue}: { issue?: Issue }) => {
         }
     });
 
-    await delay(2000);
+    // await delay(2000);
 
     return (
         <div className='max-w-xl'>
