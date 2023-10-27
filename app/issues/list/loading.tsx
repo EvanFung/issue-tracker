@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import {Skeleton} from '@/app/components'
-import IssueAction from "@/app/issues/IssueAction";
+import IssueAction from "@/app/issues/list/IssueAction";
 const LoadingIssuePage = () => {
     const issues = [1,2,3,4,5];
     return (
