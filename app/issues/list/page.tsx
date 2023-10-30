@@ -6,7 +6,6 @@ import delay from 'delay';
 import IssueAction from "@/app/issues/list/IssueAction";
 const IssuesPage = async () => {
     const issues = await prisma.issue.findMany();
-    await  delay(1000);
     return (
         <div>
             <IssueAction />
