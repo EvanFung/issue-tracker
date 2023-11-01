@@ -5,11 +5,15 @@ import {Status} from "@prisma/client";
 import Pagination from "@/app/components/Pagination";
 import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable";
 import {Flex} from "@radix-ui/themes";
+import {Metadata} from "next";
 
 interface Props {
     searchParams: IssueQuery
 }
-
+export const metadata: Metadata = {
+    title: 'Issue Tracker - Issue List',
+    description: 'View all project issues',
+};
 const IssuesPage = async ({searchParams}: Props) => {
 
     const statuses = Object.values(Status);

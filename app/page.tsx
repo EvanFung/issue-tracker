@@ -3,6 +3,12 @@ import IssueSummary from "@/app/IssueSummary";
 import prisma from "@/prisma/client";
 import IssueChart from "@/app/IssueChart";
 import {Flex, Grid} from "@radix-ui/themes";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Issue Tracker - Dashboard',
+    description: 'View a summary of project issues',
+};
 
 export default async function Home() {
     const open = await prisma.issue.count({
