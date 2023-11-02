@@ -36,3 +36,5 @@ next-env.d.ts
 
 .env
 *.toml
+# Sentry Config File
+.sentryclirc
