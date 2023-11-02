@@ -8,18 +8,21 @@ import DeleteIssueButton from "@/app/issues/[id]/DeleteIssueButton";
 import {getServerSession} from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import AssigneeSelect from "@/app/issues/[id]/AssigneeSelect";
-import {Metadata} from "next";
+import {cache} from "react";
+
+const fetchIssue = cache((issueId: number) =>
+    prisma.issue.findUnique({where: {id: issueId}})
+)
 
 interface Props {
     params: {
         id: string;
     }
 }
+
 const IssueDetailPage = async ({params}: Props) => {
-    const session = await  getServerSession(authOptions);
-    const issue = await prisma.issue.findUnique({
-        where: {id: parseInt(params.id)}
-    });
+    const session = await getServerSession(authOptions);
+    const issue = await fetchIssue(parseInt(params.id));
     if (!issue) {
         notFound();
     }
@@ -30,7 +33,7 @@ const IssueDetailPage = async ({params}: Props) => {
             </Box>
             {session && (<Box>
                 <Flex direction="column" gap="4">
-                    <AssigneeSelect issue={issue} />
+                    <AssigneeSelect issue={issue}/>
                     <EditIssueButton issueId={issue.id}/>
                     <DeleteIssueButton issueId={issue.id}/>
                 </Flex>
@@ -40,10 +43,10 @@ const IssueDetailPage = async ({params}: Props) => {
 };
 
 export async function generateMetadata({params}: Props) {
-    const issue = await prisma.issue.findUnique({where: {id: parseInt(params.id)}});
+    const issue = await fetchIssue(parseInt(params.id));
     return {
         title: issue?.title,
-        description: 'Details of issue '+ issue?.id
+        description: 'Details of issue ' + issue?.id
     }
 }
 
